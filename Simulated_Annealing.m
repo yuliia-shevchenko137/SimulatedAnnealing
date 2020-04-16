@@ -10,7 +10,7 @@ j0p = 7.4*10^-3;
 j0m = 8.3*10^-3;
 alpha = 0:0.05:300;
 U0_Ucr = [0 20 40 60]*10^-3;
-l = 4;
+l = 6;
 jlc_res = zeros(length(alpha), length(U0_Ucr));
 jls_res = zeros(length(alpha), length(U0_Ucr));
 summ = zeros(length(alpha), length(U0_Ucr));
@@ -28,14 +28,14 @@ summ = summ/max_sum;
 figure;
 plot(alpha, summ);
 xlabel('\alpha')
-ylabel('I^4/max(I^4_{60})')
+ylabel(['I^' num2str(l) '/max(I^' num2str(l) '_{60})'])
 title('Theoretical data')
 legend('0 mW', '20 mW', '40mW', '60 mW')
 %% init experimental data
-PWs = getData('data/PW4l_s.dat');
-PW20 = getData('data/PW4l_20.dat');
-PW40 = getData('data/PW4l_40.dat');
-PW60 = getData('data/PW4l_60.dat');
+PWs = getData(['data/PW' num2str(l) 'l_s.dat']);
+PW20 = getData(['data/PW' num2str(l) 'l_20.dat']);
+PW40 = getData(['data/PW' num2str(l) 'l_40.dat']);
+PW60 = getData(['data/PW' num2str(l) 'l_60.dat']);
 PW_x = PWs(:,1);
 PW_y = [PWs(:, 2) PW20(:,2) PW40(:,2) PW60(:,2)]
 max_PW = max(max(PW_y));
@@ -50,7 +50,7 @@ legend('0 mW', '20 mW', '40mW', '60 mW')
 res_alpha = [];
 error = [];
 for i = 1:length(PW_y)
-    J1 = PW_y(i, :)
+    J1 = PW_y(i, :);
     num_prew = 1;
     J_prew = summ(num_prew, :);
     dJ_prew = sum((J_prew-J1).^2);
@@ -80,5 +80,7 @@ ylabel( '\alpha' );
 figure;
 plot(PW_x, error);
 xlabel( 'P_{in}' );
-ylabel( 'sum((P-I^4(\alpha*))^2)' );
+ylabel( ['sum((P-I^' num2str(l) '(\alpha*))^2)'] );
 title('Sum of Squared Errors')
+s = [PW_x res_alpha']
+dlmwrite(['results/' num2str(l) 'th harmonic/alpha.dat'],s,'delimiter','\t','precision',6)
