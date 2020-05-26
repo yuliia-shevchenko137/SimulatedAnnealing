@@ -4,13 +4,13 @@ tic
 nu = 120;
 nu_unit = 'GHz';
 omega = NuToOmega(nu, nu_unit);
-Gammap = 23.88*10^-3;
-Gammam = 26.06*10^-3;
-j0p = 7.4*10^-3;
-j0m = 8.3*10^-3;
+Gammap = 23.8888897*10^-3;
+Gammam = 24.5506112*10^-3;
+j0p = 7.40600014*10^-3;
+j0m = 8.08399963*10^-3;
 alpha = 0:0.05:300;
 U0_Ucr = [0 20 40 60]*10^-3;
-l = 6;
+l = 4;
 jlc_res = zeros(length(alpha), length(U0_Ucr));
 jls_res = zeros(length(alpha), length(U0_Ucr));
 summ = zeros(length(alpha), length(U0_Ucr));
@@ -83,4 +83,4 @@ xlabel( 'P_{in}' );
 ylabel( ['sum((P-I^' num2str(l) '(\alpha*))^2)'] );
 title('Sum of Squared Errors')
 s = [PW_x res_alpha']
-dlmwrite(['results/' num2str(l) 'th harmonic/alpha.dat'],s,'delimiter','\t','precision',6)
+dlmwrite(['results/2nd case/' num2str(l) 'th harmonic/alpha.dat'],s,'delimiter','\t','precision',6)
